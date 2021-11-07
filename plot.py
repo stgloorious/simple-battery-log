@@ -29,7 +29,8 @@ def find_discharge_phase (data):
             # Three possibilies of starting a discharge phase:
             if ((previous_row[1] == 'Full' and row[1] == 'Discharging') or # Switched from Full to Discharge
                 (row[1] == 'Discharging' and first_row) or # Started off discharging
-                (previous_row[1] == 'Charging' and row[1] == 'Discharging')): # Switched from Charging to Discharge
+                (previous_row[1] == 'Charging' and row[1] == 'Discharging') or # Switched from Charging to Discharge
+                ((int(previous_row[3])<int(row[3])) and row[1] == 'Discharging')): # Energy is now larger but still discharging
                 discharging=True;
                 start_time=int(row[0]) # memorize time discharge phase started
                 
