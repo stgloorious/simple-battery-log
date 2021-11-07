@@ -79,8 +79,8 @@ def main ():
             if (int(row[0]) >= start_time and int(row[0]) <= end_time):
                 if ((int(row[0])-previous_time) < 120): # We allow for a maximum gap size of 120 s
                     relative_time += (int(row[0])-previous_time)
-                    time.append(relative_time/60)
-                    energy.append(int(row[3])/1e6)
+                    time.append(relative_time/60) # convert from seconds to minutes
+                    energy.append(int(row[3])/1e6) # convert from uWh to Wh
             previous_time=int(row[0])
         print('[ Phase',i,'] Total discharge time was','{:.2f}'.format(relative_time/3600),'h',
              '(','{:.2f}'.format(max(energy)),'Wh ->','{:.2f}'.format(min(energy)),'Wh )')
