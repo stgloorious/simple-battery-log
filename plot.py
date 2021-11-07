@@ -42,13 +42,14 @@ def find_discharge_phase (data):
                 # It may be the case that a discharge cycle ends and a new one begin at the same time
                 # this happens if charger was only connected when the device was off
                 if (int(previous_row[3])<int(row[3]) and row[1] == 'Discharging'):
+                    end_time=int(previous_row[0])
                     transitions.append([start_time,end_time]) # old cycle
                     start_time = int(row[0]) # start new cycle
                     discharging = True;
                 
                 else :
                     discharging=False;
-                    end_time=int(row[0]) # memorize time discharge phase started
+                    end_time=int(previous_row[0])
                     transitions.append([start_time,end_time])
             
         previous_row=row
@@ -75,6 +76,8 @@ def main ():
     print('Found', len(discharge_phase), 'discharge phases.')
     if (len(discharge_phase)==0):
         return 1
+
+    print(discharge_phase)
 
     # Go through all discharge phases and make a plot for each
     for i in range(0,len(discharge_phase)):
