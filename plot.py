@@ -62,6 +62,8 @@ def main ():
     # Find when a discharge cycle starts and ends
     discharge_phase=find_discharge_phase(data)
     print('Found', len(discharge_phase), 'discharge phases.')
+    if (len(discharge_phase)==0):
+        return 1
 
     # Go through all discharge phases and make a plot for each
     for i in range(0,len(discharge_phase)):
