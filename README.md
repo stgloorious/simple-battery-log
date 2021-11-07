@@ -18,7 +18,7 @@ Make sure `/sys/class/power_supply/BAT0` exists and `energy_now` and  `status` a
 ## Dependencies
 You will need:
 
-- Python 3
+- Python 3 with csv, matplotlib and numpy
 - Basic linux utilities (bash, date, echo etc.)
 
 ## Remarks
@@ -29,3 +29,5 @@ On my system, the output file `BAT0.log` looks like this:
     1636047781,Discharging,45090000,34520000
 
 Where the first column indicates the current unix time, the second indicates the battery status with the values 'Charging', 'Discharging', or 'Full', followed by the maximum energy of the battery in uWh, followed by the current energy of the battery in uWh. The scripts are designed to work with these kinds of values. In the current version, the maximum energy is ignored.
+
+Tested and developed on Gentoo Linux with Kernel version 5.10.61-gentoo-x86_64
