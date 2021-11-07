@@ -29,18 +29,27 @@ def find_discharge_phase (data):
             # Three possibilies of starting a discharge phase:
             if ((previous_row[1] == 'Full' and row[1] == 'Discharging') or # Switched from Full to Discharge
                 (row[1] == 'Discharging' and first_row) or # Started off discharging
-                (previous_row[1] == 'Charging' and row[1] == 'Discharging') or # Switched from Charging to Discharge
-                ((int(previous_row[3])<int(row[3])) and row[1] == 'Discharging')): # Energy is now larger but still discharging
-                discharging=True;
-                start_time=int(row[0]) # memorize time discharge phase started
+                (previous_row[1] == 'Charging' and row[1] == 'Discharging')): # Switched from Charging to Discharge
+                
+                discharging = True;
+                start_time = int(row[0]) # memorize time discharge phase started
                 
         else: # Currently in discharge phase, looking for end transitions
             if ((previous_row[1] == 'Discharging' and row[1] == 'Charging') or # Switched from Discharge to Charging
                 (row[1] == 'Discharging' and last_row) or # end of file
                 (int(previous_row[3])<int(row[3]))): # Energy is now larger than before
-                discharging=False;
-                end_time=int(row[0]) # memorize time discharge phase started
-                transitions.append([start_time,end_time])
+                
+                # It may be the case that a discharge cycle ends and a new one begin at the same time
+                # this happens if charger was only connected when the device was off
+                if (int(previous_row[3])<int(row[3]) and row[1] == 'Discharging'):
+                    transitions.append([start_time,end_time]) # old cycle
+                    start_time = int(row[0]) # start new cycle
+                    discharging = True;
+                
+                else :
+                    discharging=False;
+                    end_time=int(row[0]) # memorize time discharge phase started
+                    transitions.append([start_time,end_time])
             
         previous_row=row
     return transitions
