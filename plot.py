@@ -35,6 +35,7 @@ def find_discharge_phase (data):
                 
         else: # Currently in discharge phase, looking for end transitions
             if ((previous_row[1] == 'Discharging' and row[1] == 'Charging') or # Switched from Discharge to Charging
+                (row[1] == 'Discharging' and last_row) or # end of file
                 (int(previous_row[3])<int(row[3]))): # Energy is now larger than before
                 discharging=False;
                 end_time=int(row[0]) # memorize time discharge phase started
