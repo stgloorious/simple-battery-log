@@ -6,7 +6,7 @@ Python script parses the created file and creates a plot like this:
 ![Discharge plot](/plot1.png)
 
 ## Setup
-I have not tested this on any other machine than my Thinkpad laptop. They may very well be differences 
+I have not tested this on any other machine than my Thinkpad laptop. Likely there will be differences 
 in how the battery information is stored on your machine, so you will have to adjust for that.
 Make sure `/sys/class/power_supply/BAT0` exists and `energy_now` and  `status` are in the same format as the example below.
 
