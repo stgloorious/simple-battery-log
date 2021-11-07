@@ -19,7 +19,7 @@ Make sure `/sys/class/power_supply/BAT0` exists and `energy_now` and  `status` a
 You will need:
 
 - Python 3 with csv, matplotlib and numpy
-- Basic linux utilities (bash, date, echo etc.)
+- Basic linux utilities (bash, date, echo, cron etc.)
 
 ## Remarks
 On my system, the output file `BAT0.log` looks like this:
