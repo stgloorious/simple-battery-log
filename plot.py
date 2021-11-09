@@ -63,7 +63,7 @@ class battery_plot:
                 # - Reaching the end of the log file
 
                 if ((previous_row[self.status_index] == 'Discharging' and row[self.status_index] == 'Charging') or # Switched from Discharge to Charging
-                    (previous_row[self.status_index] == 'Discharging' and row[seld.status_index] == 'Full') or # Switched from Discharge to Full
+                    (previous_row[self.status_index] == 'Discharging' and row[self.status_index] == 'Full') or # Switched from Discharge to Full
                      (int(previous_row[self.energy_now_index]) < int(row[self.energy_now_index]))): # Energy is now larger than before
                     
                     # It may be the case that a discharge cycle ends and a new one begin at the same time
