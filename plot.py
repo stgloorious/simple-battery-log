@@ -55,13 +55,15 @@ class battery_plot:
                 
             else: # Currently in discharge phase, looking for end transitions
                 
-                # Three possibilities to end a discharge phase:
+                # Four possibilities to end a discharge phase:
                 #
                 # - Switching from Discharging to Charging (plugging in charger)
+                # - Switching from Discharging to Full (doesn't really make much sense but happens sometimes?)
                 # - Encountering an energy value that has increased (the device was powered down, charged, and powered back up)
                 # - Reaching the end of the log file
 
                 if ((previous_row[self.status_index] == 'Discharging' and row[self.status_index] == 'Charging') or # Switched from Discharge to Charging
+                    (previous_row[self.status_index] == 'Discharging' and row[seld.status_index] == 'Full') or # Switched from Discharge to Full
                      (int(previous_row[self.energy_now_index]) < int(row[self.energy_now_index]))): # Energy is now larger than before
                     
                     # It may be the case that a discharge cycle ends and a new one begin at the same time
