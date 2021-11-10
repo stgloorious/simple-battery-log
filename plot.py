@@ -40,14 +40,16 @@ class battery_plot:
             
             if (not discharging): # Not currently in discharge phase, so look for begin transitions
                 
-                # Three possibilies to start a discharge phase:
+                # Four possibilies to start a discharge phase:
                 #
                 # - Switching from Full to Discharge (removing the charger)
                 # - Switching from Charging to Discharge (removing the charger)
+                # - Switching from Unknown to Discharge (???)
                 # - Starting off discharging (began logging while on battery)
                 
                 if ((previous_row[self.status_index] == 'Full' and row[self.status_index] == 'Discharging') or
                    (previous_row[self.status_index] == 'Charging' and row[self.status_index] == 'Discharging') or 
+                   (previous_row[self.status_index] == 'Unknown' and row[self.status_index] == 'Discharging') or
                    (row[self.status_index] == 'Discharging' and first_row)):
                    
                     discharging = True;
