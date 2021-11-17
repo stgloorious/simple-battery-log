@@ -40,33 +40,30 @@ class battery_plot:
             
             if (not discharging): # Not currently in discharge phase, so look for begin transitions
                 
-                # Four possibilies to start a discharge phase:
+                # Possibilies to start a discharge phase:
                 #
                 # - Switching from Full to Discharge (removing the charger)
                 # - Switching from Charging to Discharge (removing the charger)
                 # - Switching from Unknown to Discharge (???)
                 # - Starting off discharging (began logging while on battery)
                 
-                if ((previous_row[self.status_index] == 'Full' and row[self.status_index] == 'Discharging') or
-                   (previous_row[self.status_index] == 'Charging' and row[self.status_index] == 'Discharging') or 
-                   (previous_row[self.status_index] == 'Unknown' and row[self.status_index] == 'Discharging') or
-                   (row[self.status_index] == 'Discharging' and first_row)):
+                if ((previous_row[self.status_index] != 'Discharging' and row[self.status_index] == 'Discharging') or
+                    (row[self.status_index] == 'Discharging' and first_row)):
                    
                     discharging = True;
                     start_time = int(row[self.timestamp_index]) # memorize time discharge phase started
                 
             else: # Currently in discharge phase, looking for end transitions
                 
-                # Four possibilities to end a discharge phase:
+                # Possibilities to end a discharge phase:
                 #
                 # - Switching from Discharging to Charging (plugging in charger)
                 # - Switching from Discharging to Full (doesn't really make much sense but happens sometimes?)
                 # - Encountering an energy value that has increased (the device was powered down, charged, and powered back up)
                 # - Reaching the end of the log file
 
-                if ((previous_row[self.status_index] == 'Discharging' and row[self.status_index] == 'Charging') or # Switched from Discharge to Charging
-                    (previous_row[self.status_index] == 'Discharging' and row[self.status_index] == 'Full') or # Switched from Discharge to Full
-                     (int(previous_row[self.energy_now_index]) < int(row[self.energy_now_index]))): # Energy is now larger than before
+                if ((previous_row[self.status_index] == 'Discharging' and row[self.status_index] != 'Discharging') or
+                    (int(previous_row[self.energy_now_index]) < int(row[self.energy_now_index]))): # Energy is now larger than before
                     
                     # It may be the case that a discharge cycle ends and a new one begin at the same time
                     # this happens if charger was only connected when the device was off
